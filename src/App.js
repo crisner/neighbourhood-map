@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import NavBar from './components/NavBar';
+import Map from './containers/Map';
 import Footer from './components/Footer';
 import './App.css';
 
@@ -9,8 +10,8 @@ class App extends Component {
     return (
       <div className="App">
         <NavBar />
-        {/* <Sidebar />
-        <Map /> */}
+        {/* <Sidebar /> */}
+        <Map />
         <Footer />
       </div>
     );
