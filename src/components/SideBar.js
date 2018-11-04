@@ -27,9 +27,9 @@ function SideBar(props) {
   const { classes } = props;
 
   return (
-      <Drawer
+      <Drawer open = {props.open}
         className={classes.drawer}
-        variant="permanent"
+        variant="persistent"
         classes={{
           paper: classes.drawerPaper,
         }}
