@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Component } from 'react';
+import SideBar from './SideBar';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -16,6 +17,9 @@ const styles = theme => ({
   },
   grow: {
     flexGrow: 1,
+  },
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
   },
   menuButton: {
     marginLeft: -12,
@@ -70,35 +74,54 @@ const styles = theme => ({
   },
 });
 
-function NavBar(props) {
-  const { classes } = props;
-  return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton className={classes.menuButton} color="inherit" aria-label="Open drawer">
-            <MenuIcon />
-          </IconButton>
-          <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-            Restaurants in Coimbatore, TN
-          </Typography>
-          <div className={classes.grow} />
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
+class NavBar extends Component {
+  state = {
+    open: true,
+  };
+
+  handleDrawerOpen = () => {
+    this.setState(prevState => ({
+      open: !prevState.open
+    }));
+  };
+
+  render() {
+    const { classes } = this.props;
+    const { open } = this.state;
+
+    return (
+      <div className={classes.root}>
+        <AppBar position="fixed" className={classes.appBar}>
+          <Toolbar>
+            <IconButton
+            color="inherit"
+            aria-label="Open drawer"
+            onClick={this.handleDrawerOpen}
+            className={classes.menuButton}>
+              <MenuIcon />
+            </IconButton>
+            <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+              Restaurants in Coimbatore, TN
+            </Typography>
+            <div className={classes.grow} />
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Search…"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+              />
             </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-            />
-          </div>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
+          </Toolbar>
+        </AppBar>
+        <SideBar open={open} />
+      </div>
+    );
+  }
 }
 
 NavBar.propTypes = {
