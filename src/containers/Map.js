@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import ReactMapGL from 'react-map-gl';
+import ReactMapGL, {NavigationControl} from 'react-map-gl';
+
+// mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
 
 class Map extends Component {
 
@@ -15,10 +17,13 @@ class Map extends Component {
 
   render() {
     return (
-      <ReactMapGL mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
+      <ReactMapGL
         {...this.state.viewport}
-        onViewportChange={(viewport) => this.setState({viewport})}
-      />
+        onViewportChange={(viewport) => this.setState({viewport})}>
+        <div style={{position: 'absolute', right: 0, top: '75px'}}>
+          <NavigationControl onViewportChange={(viewport) => this.setState({viewport})} />
+        </div>
+      </ReactMapGL>
     );
   }
 }
