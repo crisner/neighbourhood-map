@@ -14,6 +14,7 @@ const styles = theme => ({
   appBar: {
     top: 'auto',
     bottom: 0,
+    zIndex: theme.zIndex.drawer + 1,
   },
 });
 
