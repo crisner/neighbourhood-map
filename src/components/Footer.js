@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
@@ -11,9 +9,13 @@ const styles = theme => ({
     paddingLeft: theme.spacing.unit * 2,
     paddingRight: theme.spacing.unit * 2,
   },
-  appBar: {
+  footer: {
+    background: '#3e3e3e',
+    color: '#FFF',
+    position: 'fixed',
     top: 'auto',
     bottom: 0,
+    width: '100%',
     zIndex: theme.zIndex.drawer + 1,
   },
 });
@@ -21,14 +23,11 @@ const styles = theme => ({
 function Footer(props) {
   const { classes } = props;
   return (
-    <React.Fragment>
-      <CssBaseline />
-      <AppBar position="fixed" color="primary" className={classes.appBar}>
+      <footer position="fixed" color="primary" className={classes.footer}>
         <Typography className={classes.p} variant="body1" color="inherit" noWrap>
             Made by Renisha Christie
         </Typography>
-      </AppBar>
-    </React.Fragment>
+      </footer>
   );
 }
 
