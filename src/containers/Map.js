@@ -18,6 +18,7 @@ class Map extends Component {
   render() {
     return (
       <ReactMapGL
+        mapStyle="mapbox://styles/crisner/cjo2rsbau30eo2sns60vykal6"
         {...this.state.viewport}
         onViewportChange={(viewport) => this.setState({viewport})}>
         <div style={{position: 'absolute', right: 0, top: '75px'}}>
