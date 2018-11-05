@@ -31,7 +31,8 @@ class Map extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    console.log(this.props);
+    const { classes, location } = this.props;
     return (
       <ReactMapGL
         mapStyle="mapbox://styles/crisner/cjo2rsbau30eo2sns60vykal6"
@@ -40,11 +41,19 @@ class Map extends Component {
         <div style={{position: 'absolute', right: 0, top: '75px'}}>
           <NavigationControl onViewportChange={(viewport) => this.setState({viewport})} />
         </div>
-        <Marker
-        // className={icon.marker}
-        latitude={10.95} longitude={76.94} offsetLeft={-20} offsetTop={-10}>
-        <RestaurantIcon className={classes.icon} />
-        </Marker>
+        { location.map(coords => {
+          return (
+            <Marker
+            // className={icon.marker}
+            key={coords.res_id}
+            latitude={Number(coords.latitude)}
+            longitude={Number(coords.longitude)}
+            offsetLeft={-20} offsetTop={-10}>
+              <RestaurantIcon className={classes.icon} />
+            </Marker>
+          )
+        })}
+
       </ReactMapGL>
     );
   }
