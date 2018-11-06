@@ -65,7 +65,7 @@ class Map extends Component {
         <div className="restaurant details">
           <h4>{popupInfo.name}</h4>
           {restaurant_details.thumb === "" ? null : (
-            <img src={restaurant_details.thumb} alt={`Picture of ${restaurant_details.name}`} width="100px" />
+            <img src={restaurant_details.thumb} alt={restaurant_details.name} width="100px" />
           )}
           <p>{user_rating === undefined ? null : user_rating.aggregate_rating}
           <span>{user_rating === undefined ? null : (user_rating.votes === "1" ? ` 1 vote` : ` ${user_rating.votes} votes`)}</span></p>
