@@ -79,13 +79,13 @@ class Map extends Component {
     const { classes } = this.props;
 
     return popupInfo && (
-        <Popup
-        latitude={Number(popupInfo.latitude)}
-        longitude={Number(popupInfo.longitude)}
-        closeButton={true}
-        onClose={() => this.setState({popupInfo: null})}
-        anchor="bottom">
-        <h4 className={classes.title}>{popupInfo.name}</h4>
+      <Popup
+      latitude={Number(popupInfo.latitude)}
+      longitude={Number(popupInfo.longitude)}
+      closeButton={true}
+      onClose={() => this.setState({popupInfo: null})}
+      anchor="bottom">
+        <h4>{popupInfo.name}</h4>
         <div className={classes.details}>
           {restaurant_details.thumb === "" ? null : (
             <img src={restaurant_details.thumb} alt={restaurant_details.name} width="100px" height="100px" />
@@ -103,7 +103,7 @@ class Map extends Component {
             )}
           </ul>
         </div>
-        </Popup>
+      </Popup>
     )
   }
 
