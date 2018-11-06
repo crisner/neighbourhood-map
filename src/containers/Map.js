@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import ReactMapGL, {NavigationControl, Marker} from 'react-map-gl';
+import ReactMapGL, {NavigationControl, Marker, Popup} from 'react-map-gl';
 import RestaurantIcon from '@material-ui/icons/Restaurant';
 import { withStyles } from '@material-ui/core/styles';
 // import icon from './Map.module.css';
@@ -27,11 +27,27 @@ class Map extends Component {
       latitude: 11.004556,
       longitude: 76.961632,
       zoom: 11
-    }
+    },
+    popupInfo: null
   };
 
+  showPopup = () => {
+    const {popupInfo} = this.state;
+
+    return popupInfo && (
+        <Popup
+        latitude={Number(popupInfo.latitude)}
+        longitude={Number(popupInfo.longitude)}
+        closeButton={true}
+        onClose={() => this.setState({popupInfo: null})}
+        anchor="bottom">
+          <div>{popupInfo.name}</div>
+        </Popup>
+    )
+  }
+
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     const { classes, location } = this.props;
     return (
       <ReactMapGL
@@ -44,16 +60,16 @@ class Map extends Component {
         { location.map(coords => {
           return (
             <Marker
-            // className={icon.marker}
             key={coords.res_id}
             latitude={Number(coords.latitude)}
             longitude={Number(coords.longitude)}
             offsetLeft={-20} offsetTop={-10}>
-              <RestaurantIcon className={classes.icon} />
+              <RestaurantIcon className={classes.icon}
+              onClick={() => this.setState({popupInfo: coords})}/>
             </Marker>
           )
         })}
-
+        {this.showPopup()}
       </ReactMapGL>
     );
   }
