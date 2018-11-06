@@ -62,13 +62,16 @@ class Map extends Component {
         closeButton={true}
         onClose={() => this.setState({popupInfo: null})}
         anchor="bottom">
-          <h3>{popupInfo.name}</h3>
+        <div className="restaurant details">
+          <h4>{popupInfo.name}</h4>
           {restaurant_details.thumb === "" ? null : (
             <img src={restaurant_details.thumb} alt={`Picture of ${restaurant_details.name}`} width="100px" />
           )}
           <p>{user_rating === undefined ? null : user_rating.aggregate_rating}
           <span>{user_rating === undefined ? null : (user_rating.votes === "1" ? ` 1 vote` : ` ${user_rating.votes} votes`)}</span></p>
           <p>{location === undefined ? null : location.address}</p>
+        </div>
+        <div className="restaurant reviews">
           <h5>Reviews</h5>
           <ul>
             {restaurant_reviews.user_reviews === undefined ? null : (
@@ -76,6 +79,7 @@ class Map extends Component {
               <li key={`${restaurant_details.id}${index}`}>{review.review.review_text}</li>) : null)
             )}
           </ul>
+        </div>
         </Popup>
     )
   }
