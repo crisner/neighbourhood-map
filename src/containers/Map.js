@@ -112,7 +112,12 @@ class Map extends Component {
             longitude={Number(coords.longitude)}
             offsetLeft={-20} offsetTop={-10}>
               <RestaurantIcon className={classes.icon}
-              onClick={() => {this.setState({popupInfo: coords})}}/>
+              onClick={() => {this.setState({
+                popupInfo: coords,
+                restaurant_details: [],
+                restaurant_reviews: []
+                })
+              }} />
             </Marker>
           )
         })}
