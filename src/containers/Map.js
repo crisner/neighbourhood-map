@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import ReactMapGL, {NavigationControl, Marker, Popup} from 'react-map-gl';
 import RestaurantIcon from '@material-ui/icons/Restaurant';
+import StarIcon from '@material-ui/icons/Star';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import StarHalfIcon from '@material-ui/icons/StarHalf';
 import { withStyles } from '@material-ui/core/styles';
 // import classes from './Map.module.css';
 
@@ -17,7 +20,7 @@ const styles = theme => ({
     cursor: 'pointer'
   },
   popupInfo: {
-    padding: '0.2em 1.4em'
+    padding: '1.4em'
   },
   details: {
     display: 'flex',
@@ -78,10 +81,32 @@ class Map extends Component {
       return fetch(Url, {headers}).then(res => res.json());
   }
 
+  displayStarRating = (rating) => {
+    const FullRating = 5;
+    let ratingScore = rating;
+    let starRating = [];
+    for(let i = 0; i < FullRating; i++) {
+      if(ratingScore > 1) {
+        starRating.push(1);
+      } else if(ratingScore > 0 && ratingScore < 1) {
+        starRating.push(0.5);
+      } else {
+        starRating.push(0);
+      }
+      ratingScore--;
+    }
+    return starRating.map((star) => {
+      return (
+        star === 1 ? <StarIcon /> : (star === 0.5 ? <StarHalfIcon /> : <StarBorderIcon />)
+      )
+    });
+  }
+
   showPopup = () => {
     const {popupInfo, restaurant_details, restaurant_reviews} = this.state;
     const {location, user_rating} = this.state.restaurant_details;
     const { classes } = this.props;
+    const Rating = user_rating === undefined ? null : Number(user_rating.aggregate_rating);
 
     return popupInfo && (
       <Popup
@@ -97,6 +122,7 @@ class Map extends Component {
             <img src={restaurant_details.thumb} alt={restaurant_details.name} width="100px" height="100px" />
           )}
           <p>{user_rating === undefined ? null : user_rating.aggregate_rating}
+          <span>{this.displayStarRating(Rating)}</span>
           <span>{user_rating === undefined ? null : (user_rating.votes === "1" ? ` 1 vote` : ` ${user_rating.votes} votes`)}</span></p><br />
           <p className={classes.address}>{location === undefined ? null : location.address}</p>
         </div>
