@@ -16,6 +16,9 @@ const styles = theme => ({
     color: '#dca845',
     cursor: 'pointer'
   },
+  popupInfo: {
+    padding: '0.2em 1.4em'
+  },
   details: {
     display: 'flex',
     flexDirection: 'row',
@@ -36,7 +39,9 @@ const styles = theme => ({
   },
   address: {
     width: '100%',
-    maxWidth: '100%'
+    maxWidth: '100%',
+    fontWeight: 500,
+    marginBottom: 0
   }
 });
 
@@ -80,6 +85,7 @@ class Map extends Component {
 
     return popupInfo && (
       <Popup
+      className={classes.popupInfo}
       latitude={Number(popupInfo.latitude)}
       longitude={Number(popupInfo.longitude)}
       closeButton={true}
