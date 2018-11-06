@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ReactMapGL, {NavigationControl, Marker, Popup} from 'react-map-gl';
 import RestaurantIcon from '@material-ui/icons/Restaurant';
 import { withStyles } from '@material-ui/core/styles';
-// import icon from './Map.module.css';
+// import classes from './Map.module.css';
 
 // mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
 const styles = theme => ({
@@ -16,6 +16,28 @@ const styles = theme => ({
     color: '#dca845',
     cursor: 'pointer'
   },
+  details: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'left'
+  },
+  list: {
+    listStyle: 'none',
+    fontSize: '0.95em',
+    padding: 0
+  },
+  listItem: {
+    padding: '0.2em',
+    fontStyle: 'italic'
+  },
+  title: {
+    marginBottom: '-9px'
+  },
+  address: {
+    width: '100%',
+    maxWidth: '100%'
+  }
 });
 
 class Map extends Component {
@@ -54,6 +76,7 @@ class Map extends Component {
   showPopup = () => {
     const {popupInfo, restaurant_details, restaurant_reviews} = this.state;
     const {location, user_rating} = this.state.restaurant_details;
+    const { classes } = this.props;
 
     return popupInfo && (
         <Popup
@@ -62,21 +85,21 @@ class Map extends Component {
         closeButton={true}
         onClose={() => this.setState({popupInfo: null})}
         anchor="bottom">
-        <div className="restaurant details">
-          <h4>{popupInfo.name}</h4>
+        <h4 className={classes.title}>{popupInfo.name}</h4>
+        <div className={classes.details}>
           {restaurant_details.thumb === "" ? null : (
-            <img src={restaurant_details.thumb} alt={restaurant_details.name} width="100px" />
+            <img src={restaurant_details.thumb} alt={restaurant_details.name} width="100px" height="100px" />
           )}
           <p>{user_rating === undefined ? null : user_rating.aggregate_rating}
-          <span>{user_rating === undefined ? null : (user_rating.votes === "1" ? ` 1 vote` : ` ${user_rating.votes} votes`)}</span></p>
-          <p>{location === undefined ? null : location.address}</p>
+          <span>{user_rating === undefined ? null : (user_rating.votes === "1" ? ` 1 vote` : ` ${user_rating.votes} votes`)}</span></p><br />
+          <p className={classes.address}>{location === undefined ? null : location.address}</p>
         </div>
         <div className="restaurant reviews">
-          <h5>Reviews</h5>
-          <ul>
+          <h5 className={classes.title}>Reviews</h5>
+          <ul className={classes.list}>
             {restaurant_reviews.user_reviews === undefined ? null : (
               restaurant_reviews.user_reviews.map((review, index) => index < 2 ? (
-              <li key={`${restaurant_details.id}${index}`}>{review.review.review_text}</li>) : null)
+              <li className={classes.listItem} key={`${restaurant_details.id}${index}`}>{`"${review.review.review_text}"`}</li>) : null)
             )}
           </ul>
         </div>
