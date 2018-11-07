@@ -1,14 +1,21 @@
 import React, { Component } from 'react';
 import 'mapbox-gl/dist/mapbox-gl.css';
-// import NavBar from './components/NavBar';
+import NavBar from './components/NavBar';
 import Map from './containers/Map';
 import Footer from './components/Footer';
+import StarIcon from '@material-ui/icons/Star';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import StarHalfIcon from '@material-ui/icons/StarHalf';
 import './App.css';
+
 
 class App extends Component {
 
     state = {
-        location_details: []
+        location_details: [],
+        restaurant_details: [],
+        restaurant_reviews: [],
+        popupInfo: null
     }
 
     getAllLocations = () => {
@@ -18,6 +25,71 @@ class App extends Component {
             "user-key": process.env.REACT_APP_ZOMATO_ACCESS_TOKEN
         });
         return fetch(Url, {headers}).then(res => res.json());
+    }
+
+    getRestaurantDetails = (resId) => {
+        const Url = `https://developers.zomato.com/api/v2.1/restaurant?res_id=${resId}`;
+        const headers = new Headers({
+            "Content-Type": "application/json",
+            "user-key": process.env.REACT_APP_ZOMATO_ACCESS_TOKEN
+        });
+        return fetch(Url, {headers}).then(res => res.json());
+    }
+
+    getReviews = (resId) => {
+        const Url = `https://developers.zomato.com/api/v2.1/reviews?res_id=${resId}`;
+        const headers = new Headers({
+            "Content-Type": "application/json",
+            "user-key": process.env.REACT_APP_ZOMATO_ACCESS_TOKEN
+        });
+        return fetch(Url, {headers}).then(res => res.json());
+    }
+
+    setRestaurantInfo(resId) {
+        console.log("1:", this.state)
+        this.getRestaurantDetails(resId)
+        .then(details => {
+          this.setState({restaurant_details: details})
+          this.getReviews(resId)
+          .then(reviews => {
+            this.setState({restaurant_reviews: reviews})
+            console.log("2(update):", this.state)
+          })
+          .catch(error => console.log(error, 'Cannot find restaurant reviews'))
+        }).catch(error => console.log(error, 'Cannot find restaurant details'))
+    }
+
+    updateResInfoClickHandler = (coords) => {
+        this.setState({
+            popupInfo: coords,
+            restaurant_details: [],
+            restaurant_reviews: []
+        })
+    }
+
+    closeOnClick = () => {
+        this.setState({popupInfo: null})
+    }
+
+    displayStarRating = (rating) => {
+        const FullRating = 5;
+        let ratingScore = rating;
+        let starRating = [];
+        for(let i = 0; i < FullRating; i++) {
+          if(ratingScore > 1) {
+            starRating.push(1);
+          } else if(ratingScore > 0 && ratingScore < 1) {
+            starRating.push(0.5);
+          } else {
+            starRating.push(0);
+          }
+          ratingScore--;
+        }
+        return starRating.map((star, index) => {
+          return (
+            star === 1 ? <StarIcon key={index} /> : (star === 0.5 ? <StarHalfIcon key={index} /> : <StarBorderIcon key={index} />)
+          )
+        });
     }
 
     componentDidMount() {
@@ -42,8 +114,16 @@ class App extends Component {
     render() {
         return (
         <div className="App">
-            {/* <NavBar location={this.state.location_details} /> */}
-            <Map location={this.state.location_details} />
+            <NavBar location={this.state.location_details} />
+            <Map
+            location={this.state.location_details}
+            details={this.state.restaurant_details}
+            reviews={this.state.restaurant_reviews}
+            popupInfo={this.state.popupInfo}
+            displayStarRating={this.displayStarRating}
+            closeOnClick={this.closeOnClick.bind(this)}
+            clickInfo={this.updateResInfoClickHandler.bind(this)}
+            setRestaurantInfo={this.setRestaurantInfo.bind(this)} />
             <Footer />
         </div>
         );
