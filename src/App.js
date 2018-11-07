@@ -114,7 +114,9 @@ class App extends Component {
     render() {
         return (
         <div className="App">
-            <NavBar location={this.state.location_details} />
+            <NavBar
+            location={this.state.location_details}
+            clickInfo={this.updateResInfoClickHandler.bind(this)} />
             <Map
             location={this.state.location_details}
             details={this.state.restaurant_details}

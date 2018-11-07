@@ -118,7 +118,9 @@ class NavBar extends Component {
             </div>
           </Toolbar>
         </AppBar>
-        <SideBar open={open} location={location} />
+        <SideBar open={open}
+        location={location}
+        clickInfo={this.props.clickInfo} />
       </div>
     );
   }
