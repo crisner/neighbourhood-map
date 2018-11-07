@@ -39,7 +39,7 @@ function SideBar(props) {
           <Divider />
           {location.map(res => (
             <div key={res.res_id}>
-              <ListItem button>
+              <ListItem button onClick={() => props.clickInfo(res)}>
                 <ListItemText primary={res.name} />
                 <ListItemText secondary={res.locality} />
               </ListItem>
