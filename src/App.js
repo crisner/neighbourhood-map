@@ -29,11 +29,12 @@ class App extends Component {
                         res_id: info.restaurant.R.res_id,
                         name: info.restaurant.name,
                         latitude: info.restaurant.location.latitude,
-                        longitude: info.restaurant.location.longitude
+                        longitude: info.restaurant.location.longitude,
+                        locality: info.restaurant.location.locality
                     }
                 })
             }))
-            console.log(this.state);
+            console.log(data);
         })
         .catch(error => console.log(error))
     }
@@ -41,7 +42,7 @@ class App extends Component {
     render() {
         return (
         <div className="App">
-            <NavBar />
+            <NavBar location={this.state.location_details} />
             <Map location={this.state.location_details} />
             <Footer />
         </div>
