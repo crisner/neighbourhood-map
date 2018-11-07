@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import NavBar from '../components/NavBar';
 import ReactMapGL, {NavigationControl, Marker, Popup} from 'react-map-gl';
 import RestaurantIcon from '@material-ui/icons/Restaurant';
 import StarIcon from '@material-ui/icons/Star';
@@ -156,6 +157,9 @@ class Map extends Component {
     // console.log(this.props);
     const { classes, location } = this.props;
     return (
+      <React.Fragment>
+      <NavBar location={location} />
+
       <ReactMapGL
         mapStyle="mapbox://styles/crisner/cjo2rsbau30eo2sns60vykal6"
         {...this.state.viewport}
@@ -183,6 +187,7 @@ class Map extends Component {
         {this.showPopup()}
         {console.log(this.state)}
       </ReactMapGL>
+      </React.Fragment>
     );
   }
 }
