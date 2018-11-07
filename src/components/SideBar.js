@@ -24,7 +24,7 @@ const styles = theme => ({
 });
 
 function SideBar(props) {
-  const { classes } = props;
+  const { classes, location } = props;
 
   return (
       <Drawer open = {props.open}
@@ -37,10 +37,11 @@ function SideBar(props) {
         <div className={classes.toolbar} />
         <List>
           <Divider />
-          {['Place 1', 'Place 2', 'Place 3'].map(text => (
-            <div key={text}>
+          {location.map(res => (
+            <div key={res.res_id}>
               <ListItem button>
-                <ListItemText primary={text} />
+                <ListItemText primary={res.name} />
+                <ListItemText secondary={res.locality} />
               </ListItem>
               <Divider />
             </div>
