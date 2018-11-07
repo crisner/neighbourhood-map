@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import NavBar from './components/NavBar';
+// import NavBar from './components/NavBar';
 import Map from './containers/Map';
 import Footer from './components/Footer';
 import './App.css';
@@ -42,7 +42,7 @@ class App extends Component {
     render() {
         return (
         <div className="App">
-            <NavBar location={this.state.location_details} />
+            {/* <NavBar location={this.state.location_details} /> */}
             <Map location={this.state.location_details} />
             <Footer />
         </div>
