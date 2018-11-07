@@ -86,7 +86,7 @@ class NavBar extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, location } = this.props;
     const { open } = this.state;
 
     return (
@@ -118,7 +118,7 @@ class NavBar extends Component {
             </div>
           </Toolbar>
         </AppBar>
-        <SideBar open={open} />
+        <SideBar open={open} location={location} />
       </div>
     );
   }
