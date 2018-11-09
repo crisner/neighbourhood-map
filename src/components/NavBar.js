@@ -77,7 +77,6 @@ const styles = theme => ({
 class NavBar extends Component {
   state = {
     open: true,
-    query: ''
   };
 
   handleDrawerOpen = () => {
@@ -87,9 +86,9 @@ class NavBar extends Component {
   };
 
   onChangeHandler = (e) => {
-    console.log(e.target.value);
+    // console.log('query entered', e.target.value);
     let query = e.target.value;
-    this.setState({query: query.trim()})
+    this.props.updateQuery(query);
   }
 
   render() {
@@ -118,7 +117,7 @@ class NavBar extends Component {
               <InputBase
                 onChange={this.onChangeHandler}
                 placeholder="Search…"
-                value={this.state.query}
+                value={this.props.query}
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,
