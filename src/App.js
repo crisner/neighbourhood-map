@@ -62,11 +62,19 @@ class App extends Component {
     }
 
     updateResInfoClickHandler = (coords) => {
-        this.setState({
-            popupInfo: coords,
-            restaurant_details: [],
-            restaurant_reviews: []
-        })
+        if(this.state.popupInfo === coords) {
+            this.setState({
+                popupInfo: null,
+                restaurant_details: [],
+                restaurant_reviews: []
+            })
+        } else {
+            this.setState({
+                popupInfo: coords,
+                restaurant_details: [],
+                restaurant_reviews: []
+            })
+        }
     }
 
     updateQuery = (query) => {
