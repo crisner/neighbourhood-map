@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import escapeRegExp from 'escape-string-regexp'
 import 'mapbox-gl/dist/mapbox-gl.css';
 import NavBar from './components/NavBar';
 import Map from './containers/Map';
@@ -15,7 +16,8 @@ class App extends Component {
         location_details: [],
         restaurant_details: [],
         restaurant_reviews: [],
-        popupInfo: null
+        popupInfo: null,
+        query: ''
     }
 
     getAllLocations = () => {
@@ -67,6 +69,10 @@ class App extends Component {
         })
     }
 
+    updateQuery = (query) => {
+        this.setState({ query: query.trim() });
+    }
+
     closeOnClick = () => {
         this.setState({popupInfo: null})
     }
@@ -112,13 +118,25 @@ class App extends Component {
     }
 
     render() {
+
+        let showLocList;
+        if(this.state.query) {
+            const match = new RegExp(escapeRegExp(this.state.query), 'i')
+            showLocList = this.state.location_details
+            .filter(location => match.test(location.name))
+        } else {
+            showLocList = this.state.location_details;
+        }
+
         return (
         <div className="App">
             <NavBar
-            location={this.state.location_details}
+            location={showLocList}
+            query={this.state.query}
+            updateQuery={this.updateQuery.bind(this)}
             clickInfo={this.updateResInfoClickHandler.bind(this)} />
             <Map
-            location={this.state.location_details}
+            location={showLocList}
             details={this.state.restaurant_details}
             reviews={this.state.restaurant_reviews}
             popupInfo={this.state.popupInfo}
