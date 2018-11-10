@@ -2,19 +2,34 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import ReactMapGL, {NavigationControl, Marker, Popup} from 'react-map-gl';
 import RestaurantIcon from '@material-ui/icons/Restaurant';
+import ChipPin from '../components/ChipPin';
 import { withStyles } from '@material-ui/core/styles';
-// import classes from './Map.module.css';
 
 // mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
 const styles = theme => ({
   root: {
     color: theme.palette.text.primary,
   },
-  icon: {
+  chip: {
     margin: theme.spacing.unit,
-    fontSize: 32,
-    color: '#dca845',
-    cursor: 'pointer'
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    width: '1.8em',
+    height: '1.8em',
+    borderRadius: '100%',
+    transform: 'rotateZ(45deg)',
+    borderBottomRightRadius: 0
+  },
+  icon: {
+    position: 'relative',
+    left: '50%',
+    margin: 0,
+    alignSelf: 'center',
+    color: '#FFF',
+    cursor: 'pointer',
+    fontSize: '16px',
+    transform: 'rotateZ(315deg)'
   },
   popupInfo: {
     padding: '1.4em'
@@ -104,6 +119,8 @@ class Map extends Component {
   render() {
     // console.log(this.props);
     const { classes, location } = this.props;
+    const DroppedPin = ChipPin('#f7b148');
+
     return (
         <ReactMapGL
           mapStyle="mapbox://styles/crisner/cjo2rsbau30eo2sns60vykal6"
@@ -119,8 +136,8 @@ class Map extends Component {
               latitude={Number(coords.latitude)}
               longitude={Number(coords.longitude)}
               offsetLeft={-20} offsetTop={-10}>
-                <RestaurantIcon className={classes.icon}
-                onClick={() => this.props.clickInfo(coords)} />
+                <DroppedPin className={classes.chip} icon={<RestaurantIcon className={classes.icon} />}
+                onClick={() => {this.props.clickInfo(coords)}} />
               </Marker>
             )
           })}
