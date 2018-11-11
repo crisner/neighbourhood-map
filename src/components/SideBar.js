@@ -37,7 +37,14 @@ function SideBar(props) {
         <div className={classes.toolbar} />
         <List>
           <Divider />
-          {location.map(res => (
+          {location.hasOwnProperty('status') && location.status !== 200 ? (
+            <div key={`${location.status}no-list`}>
+            <ListItem button>
+              <ListItemText primary="No restaurants found" />
+            </ListItem>
+            <Divider />
+          </div>
+          ) : (location.map(res => (
             <div key={res.res_id}>
               <ListItem button onClick={() => props.clickInfo(res)}>
                 <ListItemText primary={res.name} />
@@ -45,7 +52,7 @@ function SideBar(props) {
               </ListItem>
               <Divider />
             </div>
-          ))}
+          )))}
         </List>
       </Drawer>
   );

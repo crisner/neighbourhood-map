@@ -137,18 +137,20 @@ class Map extends Component {
           <div style={{position: 'absolute', right: 0, top: '75px'}}>
             <NavigationControl onViewportChange={(viewport) => this.setState({viewport})} />
           </div>
-          { location.map(coords => {
-            return (
-              <Marker
-              key={coords.res_id}
-              latitude={Number(coords.latitude)}
-              longitude={Number(coords.longitude)}
-              offsetLeft={-20} offsetTop={-10}>
-                <DroppedPin className={classes.chip} icon={<RestaurantIcon className={classes.icon} />}
-                onClick={() => {this.props.clickInfo(coords)}} />
-              </Marker>
-            )
-          })}
+          { location.hasOwnProperty('status') && location.status !== 200 ? null : (
+            location.map(coords => {
+              return (
+                <Marker
+                key={coords.res_id}
+                latitude={Number(coords.latitude)}
+                longitude={Number(coords.longitude)}
+                offsetLeft={-20} offsetTop={-10}>
+                  <DroppedPin className={classes.chip} icon={<RestaurantIcon className={classes.icon} />}
+                  onClick={() => {this.props.clickInfo(coords)}} />
+                </Marker>
+              )
+            })
+          )}
           {this.showPopup()}
         </ReactMapGL>
     );
