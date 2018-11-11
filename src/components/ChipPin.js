@@ -23,7 +23,7 @@ const ChipPin = (color = null) => {
     };
   };
 
-  const CustomChip = ({ classes, ...props }) =>
+  const CustomChip = ({ classes, ...props }) => // Create custom chip for custom styles
     <Chip classes={classes} {...props} />;
 
   return withStyles(styles)(CustomChip);

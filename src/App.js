@@ -10,7 +10,6 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import StarHalfIcon from '@material-ui/icons/StarHalf';
 import './App.css';
 
-
 class App extends Component {
 
     state = {
@@ -24,6 +23,9 @@ class App extends Component {
         modalOpen: false
     }
 
+    /*
+     *   API Call to get all restaurant locations
+     */
     getAllLocations = () => {
         const Url = 'https://developers.zomato.com/api/v2.1/search?entity_id=30&entity_type=city&lat=11.0168&lon=76.9558&establishment_type=16&category=1%2C2%2C5&sort=rating&order=desc&start=0';
         const headers = new Headers({
@@ -42,6 +44,9 @@ class App extends Component {
         });
     }
 
+    /*
+     *   API Call to get restaurant details
+     */
     getRestaurantDetails = (resId) => {
         const Url = `https://developers.zomato.com/api/v2.1/restaurant?res_id=${resId}`;
         const headers = new Headers({
@@ -60,6 +65,9 @@ class App extends Component {
         });
     }
 
+    /*
+     *   API Call to get restaurant reviews
+     */
     getReviews = (resId) => {
         const Url = `https://developers.zomato.com/api/v2.1/reviews?res_id=${resId}`;
         const headers = new Headers({
@@ -78,6 +86,10 @@ class App extends Component {
         });
     }
 
+    /*
+     *   Function to get restaurant data
+     *   from the api
+     */
     setRestaurantInfo(resId) {
         console.log("1:", this.state)
         this.getRestaurantDetails(resId)
@@ -100,6 +112,9 @@ class App extends Component {
         })
     }
 
+    /*
+     *   Function to update restaurant data
+     */
     updateResInfoClickHandler = (coords) => {
         if(this.state.popupInfo === coords) {
             this.setState({
@@ -116,19 +131,29 @@ class App extends Component {
         }
     }
 
+    /*
+     *   Update search query
+     */
     updateQuery = (query) => {
         this.setState({ query: query.trim() });
     }
 
+    /*
+     *   Close popup box
+     */
     closeOnClick = () => {
         this.setState({popupInfo: null})
     }
 
+    /*
+     *   Function to display rating
+     *   with star icons
+     */
     displayStarRating = (rating) => {
         const FullRating = 5;
         let ratingScore = rating;
         let starRating = [];
-        for(let i = 0; i < FullRating; i++) {
+        for(let i = 0; i < FullRating; i++) { // Put type of star in the array
           if(ratingScore > 1) {
             starRating.push(1);
           } else if(ratingScore > 0 && ratingScore < 1) {
@@ -138,13 +163,16 @@ class App extends Component {
           }
           ratingScore--;
         }
-        return starRating.map((star, index) => {
+        return starRating.map((star, index) => { // Display star with icons depending upon type
           return (
             star === 1 ? <StarIcon key={index} /> : (star === 0.5 ? <StarHalfIcon key={index} /> : <StarBorderIcon key={index} />)
           )
         });
     }
 
+    /*
+     *   Handlers for modal
+     */
     handleOpen = () => {
         this.setState({ modalOpen: true });
     };
@@ -157,6 +185,9 @@ class App extends Component {
          });
     };
 
+    /*
+     *   Display modal
+     */
     showModal = () => {
         return this.state.error && (
             <Modal open={this.state.error}
@@ -195,7 +226,7 @@ class App extends Component {
     render() {
 
         let showLocList;
-        if(this.state.query) {
+        if(this.state.query) { // Display filtered list
             const match = new RegExp(escapeRegExp(this.state.query), 'i')
             showLocList = this.state.location_details
             .filter(location => match.test(location.name))

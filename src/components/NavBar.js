@@ -11,6 +11,7 @@ import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 
+// Styles for materialui components
 const styles = theme => ({
   root: {
     width: '100%',
@@ -126,7 +127,7 @@ class NavBar extends Component {
             </div>
           </Toolbar>
         </AppBar>
-        <SideBar open={open}
+        <SideBar open={open} // Contains restaurants list
         location={location}
         clickInfo={this.props.clickInfo} />
       </div>

@@ -5,6 +5,7 @@ import RestaurantIcon from '@material-ui/icons/Restaurant';
 import ChipPin from '../components/ChipPin';
 import { withStyles } from '@material-ui/core/styles';
 
+// Styles for materialui components
 const styles = theme => ({
   root: {
     color: theme.palette.text.primary,
@@ -71,6 +72,10 @@ class Map extends Component {
     }
   };
 
+  /*
+   *  Function call to display restaurant information
+   *  as popup
+   */
   showPopup = () => {
     const {popupInfo, details, reviews} = this.props;
     const {location, user_rating} = this.props.details;
@@ -88,6 +93,9 @@ class Map extends Component {
         onClose={this.props.closeOnClick}
         anchor="bottom">
             <h4 tabIndex="0">{popupInfo.name}</h4>
+            {
+              // Display restaurant details
+            }
             <div tabIndex="0" className={classes.details}>
               {conditionDetails ? <p className={classes.address}>No details found</p> : null}
               {conditionDetails || details.thumb === "" ? null : (
@@ -100,6 +108,9 @@ class Map extends Component {
               )}</span></p><br />
               <p className={classes.address}>{conditionDetails || location === undefined ? null : location.address}</p>
             </div>
+            {
+              // Display restaurant reviews
+            }
             <div tabIndex="0" className="restaurant reviews">
                 <h5 className={classes.title}>Reviews</h5>
                 <ul className={classes.list}>
