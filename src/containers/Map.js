@@ -77,6 +77,7 @@ class Map extends Component {
     const {location, user_rating} = this.props.details;
     const { classes } = this.props;
     const Rating = user_rating === undefined ? null : Number(user_rating.aggregate_rating);
+    const condition = `details.hasOwnProperty('status') && details.status !== 200`;
 
     return popupInfo && (
         <Popup
@@ -88,20 +89,26 @@ class Map extends Component {
         anchor="bottom">
             <h4>{popupInfo.name}</h4>
             <div className={classes.details}>
-                {details.thumb === "" ? null : (
-                <img src={details.thumb} alt={details.name} width="100px" height="100px" />
-                )}
-                <p>{user_rating === undefined ? null : user_rating.aggregate_rating}
-                <span>{this.props.displayStarRating(Rating)}</span>
-                <span>{user_rating === undefined ? null : (user_rating.votes === "1" ? ` 1 vote` : ` ${user_rating.votes} votes`)}</span></p><br />
-                <p className={classes.address}>{location === undefined ? null : location.address}</p>
+              {condition ? <p className={classes.address}>No details found</p> : null}
+              {condition || details.thumb === "" ? null : (
+              <img src={details.thumb} alt={details.name} width="100px" height="100px" />
+              )}
+              <p>{condition || user_rating === undefined ? null : user_rating.aggregate_rating}
+              <span>{condition ? null : this.props.displayStarRating(Rating)}</span>
+              <span>{condition || user_rating === undefined ? null : (
+                user_rating.votes === "1" ? ` 1 vote` : ` ${user_rating.votes} votes`
+              )}</span></p><br />
+              <p className={classes.address}>{condition || location === undefined ? null : location.address}</p>
             </div>
             <div className="restaurant reviews">
                 <h5 className={classes.title}>Reviews</h5>
                 <ul className={classes.list}>
-                {reviews.user_reviews === undefined ? null : (
-                    reviews.user_reviews.map((review, index) => index < 2 ? (
-                    <li className={classes.listItem} key={`${details.id}${index}`}>{`"${review.review.review_text}"`}</li>) : null)
+                {reviews.user_reviews === undefined ? (
+                  <li className={classes.listItem} key={`${details.id}0`}>{`No reviews found`}</li>
+                ) : (
+                  reviews.user_reviews.map((review, index) => index < 2 ? (
+                  <li className={classes.listItem} key={`${details.id}${index}`}>{`"${review.review.review_text}"`}</li>
+                  ) : null)
                 )}
                 </ul>
             </div>
