@@ -5,7 +5,6 @@ import RestaurantIcon from '@material-ui/icons/Restaurant';
 import ChipPin from '../components/ChipPin';
 import { withStyles } from '@material-ui/core/styles';
 
-// mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
 const styles = theme => ({
   root: {
     color: theme.palette.text.primary,
@@ -131,9 +130,10 @@ class Map extends Component {
 
     return (
         <ReactMapGL
-          mapStyle="mapbox://styles/crisner/cjo2rsbau30eo2sns60vykal6"
-          {...this.state.viewport}
-          onViewportChange={(viewport) => this.setState({viewport})}>
+        mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
+        mapStyle={"mapbox://styles/crisner/cjo2rsbau30eo2sns60vykal6" || "mapbox://styles/mapbox/light-v9"}
+        {...this.state.viewport}
+        onViewportChange={(viewport) => this.setState({viewport})}>
           <div style={{position: 'absolute', right: 0, top: '75px'}}>
             <NavigationControl onViewportChange={(viewport) => this.setState({viewport})} />
           </div>
