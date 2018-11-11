@@ -19,7 +19,9 @@ class App extends Component {
         restaurant_reviews: [],
         popupInfo: null,
         query: '',
-        error: null
+        error: false,
+        errorText: '',
+        modalOpen: false
     }
 
     getAllLocations = () => {
@@ -28,7 +30,16 @@ class App extends Component {
             "Content-Type": "application/json",
             "user-key": process.env.REACT_APP_ZOMATO_ACCESS_TOKEN
         });
-        return fetch(Url, {headers}).then(res => res.json());
+        return fetch(Url, {headers}).then(res => {
+            if(!res.ok) {
+                return Promise.reject({
+                    status: res.status,
+                    statusText: res.statusText
+                })
+            } else {
+                return res.json();
+            }
+        });
     }
 
     getRestaurantDetails = (resId) => {
@@ -134,9 +145,23 @@ class App extends Component {
         });
     }
 
+    handleOpen = () => {
+        this.setState({ modalOpen: true });
+    };
+
+    handleClose = () => {
+        this.setState({
+            modalOpen: false,
+            error: false,
+            errorText: ''
+         });
+    };
+
     showModal = () => {
         return this.state.error && (
-            <Modal text={`${this.state.error}: Cannot find restaurant reviews`} />
+            <Modal open={this.state.error}
+             text={this.state.errorText}
+             handleClose={this.handleClose.bind(this)} />
         )
     }
 
@@ -156,7 +181,15 @@ class App extends Component {
             }))
             console.log(data);
         })
-        .catch(error => console.log(error))
+        .catch(error => {
+            this.handleOpen();
+            this.setState({
+                location_details: error,
+                error: true,
+                errorText: 'Unable to retrieve restaurant locations'
+            })
+            console.log(error)
+        })
     }
 
     render() {
@@ -178,6 +211,7 @@ class App extends Component {
             updateQuery={this.updateQuery.bind(this)}
             clickInfo={this.updateResInfoClickHandler.bind(this)} />
             <Map
+            error={this.state.error}
             location={showLocList}
             details={this.state.restaurant_details}
             reviews={this.state.restaurant_reviews}
@@ -186,8 +220,8 @@ class App extends Component {
             closeOnClick={this.closeOnClick.bind(this)}
             clickInfo={this.updateResInfoClickHandler.bind(this)}
             setRestaurantInfo={this.setRestaurantInfo.bind(this)} />
-            {this.showModal()}
             <Footer />
+            {this.showModal()}
         </div>
         );
     }
