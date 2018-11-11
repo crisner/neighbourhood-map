@@ -24,7 +24,7 @@ function Footer(props) {
   const { classes } = props;
   return (
       <footer position="fixed" color="primary" className={classes.footer}>
-        <Typography className={classes.p} variant="body1" color="inherit" noWrap>
+        <Typography tabIndex="0" className={classes.p} variant="body1" color="inherit" noWrap>
             Made by Renisha Christie
         </Typography>
       </footer>

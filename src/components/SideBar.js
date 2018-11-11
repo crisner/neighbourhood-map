@@ -35,18 +35,18 @@ function SideBar(props) {
         }}
       >
         <div className={classes.toolbar} />
-        <List>
+        <List role="list">
           <Divider />
           {location.hasOwnProperty('status') && location.status !== 200 ? (
             <div key={`${location.status}no-list`}>
-            <ListItem button>
+            <ListItem role="listitem" button>
               <ListItemText primary="No restaurants found" />
             </ListItem>
             <Divider />
           </div>
           ) : (location.map(res => (
             <div key={res.res_id}>
-              <ListItem button onClick={() => props.clickInfo(res)}>
+              <ListItem role="listitem" button onClick={() => props.clickInfo(res)}>
                 <ListItemText primary={res.name} />
                 <ListItemText secondary={res.locality} />
               </ListItem>

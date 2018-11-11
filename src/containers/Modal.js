@@ -3,7 +3,7 @@ import classes from './Modal.module.css';
 
 function Modal(props) {
   return (
-    <div className={classes.Modal}>
+    <div role="alert" className={classes.Modal}>
       <button title="Close" className={classes.button} onClick={props.handleClose}>x</button>
       <h4 className={classes.text}>{props.text}</h4>
     </div>

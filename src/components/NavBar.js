@@ -97,8 +97,8 @@ class NavBar extends Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="fixed" className={classes.appBar}>
-          <Toolbar>
+        <AppBar role="navigation" position="fixed" className={classes.appBar}>
+          <Toolbar role="toolbar">
             <IconButton
             color="inherit"
             aria-label="Open drawer"
@@ -106,13 +106,13 @@ class NavBar extends Component {
             className={classes.menuButton}>
               <MenuIcon />
             </IconButton>
-            <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+            <Typography tabIndex="0" className={classes.title} variant="h6" color="inherit" noWrap>
               Restaurants in Coimbatore, TN
             </Typography>
             <div className={classes.grow} />
             <div className={classes.search}>
               <div className={classes.searchIcon}>
-                <SearchIcon />
+                <SearchIcon role="searchbox" aria-label="Search for restaurants in Coimbatore, TN" />
               </div>
               <InputBase
                 onChange={this.onChangeHandler}

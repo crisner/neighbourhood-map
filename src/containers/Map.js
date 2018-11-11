@@ -87,8 +87,8 @@ class Map extends Component {
         closeButton={true}
         onClose={this.props.closeOnClick}
         anchor="bottom">
-            <h4>{popupInfo.name}</h4>
-            <div className={classes.details}>
+            <h4 tabIndex="0">{popupInfo.name}</h4>
+            <div tabIndex="0" className={classes.details}>
               {conditionDetails ? <p className={classes.address}>No details found</p> : null}
               {conditionDetails || details.thumb === "" ? null : (
               <img src={details.thumb} alt={details.name} width="100px" height="100px" />
@@ -100,7 +100,7 @@ class Map extends Component {
               )}</span></p><br />
               <p className={classes.address}>{conditionDetails || location === undefined ? null : location.address}</p>
             </div>
-            <div className="restaurant reviews">
+            <div tabIndex="0" className="restaurant reviews">
                 <h5 className={classes.title}>Reviews</h5>
                 <ul className={classes.list}>
                 {conditionReviews || reviews.user_reviews === undefined ? (
@@ -130,6 +130,7 @@ class Map extends Component {
 
     return (
         <ReactMapGL
+        role="application"
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
         mapStyle={"mapbox://styles/crisner/cjo2rsbau30eo2sns60vykal6" || "mapbox://styles/mapbox/light-v9"}
         {...this.state.viewport}
