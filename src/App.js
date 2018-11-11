@@ -35,7 +35,7 @@ class App extends Component {
         const Url = `https://developers.zomato.com/api/v2.1/restaurant?res_id=${resId}`;
         const headers = new Headers({
             "Content-Type": "application/json",
-            "user-key": "0998"
+            "user-key": process.env.REACT_APP_ZOMATO_ACCESS_TOKEN
         });
         return fetch(Url, {headers}).then(res => {
             if(!res.ok) {
@@ -72,17 +72,20 @@ class App extends Component {
         this.getRestaurantDetails(resId)
         .then(details => {
             this.setState({restaurant_details: details})
-            this.getReviews(resId)
-            .then(reviews => {
-                console.log(reviews);
-                this.setState({restaurant_reviews: reviews});
-                console.log("2(update):", this.state)
-            })
-            .catch(error => console.log(error, 'Cannot find restaurant reviews'))
-
-        }).catch(error => {
+        })
+        .catch(error => {
+            this.setState({restaurant_details: error})
             console.log(error, 'Cannot find restaurant details')
-            this.setState({restaurant_details: ['No details found']});
+        })
+        this.getReviews(resId)
+        .then(reviews => {
+            console.log(reviews);
+            this.setState({restaurant_reviews: reviews});
+            console.log("2(update):", this.state)
+        })
+        .catch(error => {
+            this.setState({restaurant_reviews: error});
+            console.log(error, this.state, 'Cannot find restaurant reviews')
         })
     }
 
