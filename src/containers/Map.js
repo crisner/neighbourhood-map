@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import ReactMapGL, {NavigationControl, Marker, Popup} from 'react-map-gl';
+import ReactMapGL, {NavigationControl, Marker} from 'react-map-gl';
+import Popup from './Popup';
 import RestaurantIcon from '@material-ui/icons/Restaurant';
 import ChipPin from '../components/ChipPin';
 import { withStyles } from '@material-ui/core/styles';
@@ -37,18 +38,15 @@ const styles = theme => ({
     fontSize: '16px',
     transform: 'rotateZ(315deg)'
   },
-  popupInfo: {
-    padding: '1.4em'
-  },
   details: {
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'left'
+    justifyContent: 'left',
+    fontSize: '0.5em',
   },
   list: {
     listStyle: 'none',
-    fontSize: '0.95em',
     padding: 0
   },
   listItem: {
@@ -95,52 +93,20 @@ class Map extends Component {
     const {popupInfo, details, reviews} = this.props;
     const {location, user_rating} = this.props.details;
     const { classes } = this.props;
-    const Rating = user_rating === undefined ? null : Number(user_rating.aggregate_rating);
-    const conditionDetails = ((details.hasOwnProperty('status') && details.status !== 200) || details.hasOwnProperty('message'));
-    const conditionReviews = ((reviews.hasOwnProperty('status') && reviews.status !== 200) || reviews.hasOwnProperty('message'));
 
     return popupInfo && (
-        <Popup
-        className={classes.popupInfo}
-        latitude={Number(popupInfo.latitude)}
-        longitude={Number(popupInfo.longitude)}
-        closeButton={true}
+      <Popup
+        popupInfo={popupInfo}
+        details={details}
+        reviews={reviews}
+        user_rating={user_rating}
+        location={location}
+        displayStarRating={this.props.displayStarRating}
+        classes={classes}
         onClose={this.props.closeOnClick}
-        anchor="bottom">
-            <h4 tabIndex="0">{popupInfo.name}</h4>
-            {
-              // Display restaurant details
-            }
-            <div tabIndex="0" className={classes.details}>
-              {conditionDetails ? <p className={classes.address}>No details found</p> : null}
-              {conditionDetails || details.thumb === "" ? null : (
-              <img src={details.thumb} alt={details.name} width="100px" height="100px" />
-              )}
-              <p>{conditionDetails || user_rating === undefined ? null : user_rating.aggregate_rating}
-              <span>{conditionDetails ? null : this.props.displayStarRating(Rating)}</span>
-              <span>{conditionDetails || user_rating === undefined ? null : (
-                user_rating.votes === "1" ? ` 1 vote` : ` ${user_rating.votes} votes`
-              )}</span></p><br />
-              <p className={classes.address}>{conditionDetails || location === undefined ? null : location.address}</p>
-            </div>
-            {
-              // Display restaurant reviews
-            }
-            <div tabIndex="0" className="restaurant reviews">
-                <h5 className={classes.title}>Reviews</h5>
-                <ul className={classes.list}>
-                {conditionReviews || reviews.user_reviews === undefined ? (
-                  <li className={classes.listItem} key={`${details.id}0`}>{`No reviews found`}</li>
-                ) : (
-                  reviews.user_reviews.map((review, index) => index < 2 ? (
-                  <li className={classes.listItem} key={`${details.id}${index}`}>{`"${review.review.review_text}"`}</li>
-                  ) : null)
-                )}
-                </ul>
-            </div>
-        </Popup>
-      )
-    }
+         />
+    )
+  }
 
   componentDidMount() {
     const height = this.props.height(); // height setter for map element
