@@ -202,9 +202,17 @@ class App extends Component {
     reduceHeight = () => {
         const totalHeight = window.innerHeight;
         const navHeight = document.querySelector('header').clientHeight;
-        const footerHeight = document.querySelector('header').clientHeight;
+        const footerHeight = document.querySelector('footer').clientHeight;
         const mapHeight = totalHeight - (navHeight + footerHeight);
         return mapHeight;
+    }
+
+    /*
+     *   Get position for map component
+     */
+    setPosition = () => {
+        const navHeight = document.querySelector('header').clientHeight;
+        return navHeight;
     }
 
     componentDidMount() {
@@ -253,6 +261,7 @@ class App extends Component {
             updateQuery={this.updateQuery.bind(this)}
             clickInfo={this.updateResInfoClickHandler.bind(this)} />
             <Map
+            topPosition={this.setPosition}
             height={this.reduceHeight}
             error={this.state.error}
             location={showLocList}

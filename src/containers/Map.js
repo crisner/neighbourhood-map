@@ -76,8 +76,8 @@ class Map extends Component {
       longitude: 76.961632,
       zoom: 11,
       maxBounds: bounds
-
-    }
+    },
+    top: 0
   };
 
   /*
@@ -143,15 +143,19 @@ class Map extends Component {
     }
 
   componentDidMount() {
-    const height = this.props.height();
-    this.setState({viewport: {
+    const height = this.props.height(); // height setter for map element
+    const topPosition = this.props.topPosition(); // position setter for map element
+    this.setState({
+      viewport: {
       width: window.innerWidth,
-      height: height,
+      height,
       latitude: 11.004556,
       longitude: 76.961632,
       zoom: 11,
       maxBounds: bounds
-    }})
+      },
+      top: topPosition
+  })
   }
 
   componentWillReceiveProps(nextProps) {
@@ -167,13 +171,14 @@ class Map extends Component {
     const DroppedPin = ChipPin('#f7b148');
 
     return (
+      <div style={{position: 'absolute', top: `${this.state.top}px`}}>
         <ReactMapGL
         role="application"
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
         mapStyle={"mapbox://styles/crisner/cjo2rsbau30eo2sns60vykal6" || "mapbox://styles/mapbox/light-v9"}
         {...this.state.viewport}
         onViewportChange={this._onViewportChange}>
-          <div style={{position: 'absolute', right: 0, top: '75px'}}>
+          <div style={{position: 'absolute', right: 0, top: '40px'}}>
             <NavigationControl onViewportChange={(viewport) => this.setState({viewport})} />
           </div>
           { location.hasOwnProperty('status') && location.status !== 200 ? null : (
@@ -192,6 +197,7 @@ class Map extends Component {
           )}
           {this.showPopup()}
         </ReactMapGL>
+      </div>
     );
   }
 }
