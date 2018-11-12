@@ -96,8 +96,8 @@ class Map extends Component {
     const {location, user_rating} = this.props.details;
     const { classes } = this.props;
     const Rating = user_rating === undefined ? null : Number(user_rating.aggregate_rating);
-    const conditionDetails = details.hasOwnProperty('status') && details.status !== 200;
-    const conditionReviews = reviews.hasOwnProperty('status') && reviews.status !== 200;
+    const conditionDetails = ((details.hasOwnProperty('status') && details.status !== 200) || details.hasOwnProperty('message'));
+    const conditionReviews = ((reviews.hasOwnProperty('status') && reviews.status !== 200) || reviews.hasOwnProperty('message'));
 
     return popupInfo && (
         <Popup
