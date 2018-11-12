@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import ReactMapGL, {NavigationControl, Marker, Popup} from 'react-map-gl';
+import ReactMapGL, {NavigationControl, Marker, Popup, FlyToInterpolator} from 'react-map-gl';
 import WebMercatorViewport from 'viewport-mercator-project';
+import * as d3 from 'd3-ease';
 import RestaurantIcon from '@material-ui/icons/Restaurant';
 import ChipPin from '../components/ChipPin';
 import { withStyles } from '@material-ui/core/styles';
 
 // Set bounds to Coimbatore, TN
 const bounds = [
-  [10.907189, 76.864568], // Southwest coordinates
-  [11.114782, 77.074681]  // Northeast coordinates
+  [10.993437, 76.909858], // Southwest coordinates
+  [11.037247, 76.985733]  // Northeast coordinates
 ];
 
 // Styles for materialui components
@@ -80,6 +81,28 @@ class Map extends Component {
 
     }
   };
+
+  onViewportChange = viewport => {
+    this.setState({viewport});
+  };
+
+  // goToRestaurant = (lat, lng) => {
+  //   const {zoom} = new WebMercatorViewport(this.state.viewport)
+  //           .fitBounds(bounds, {
+  //             padding: 20,
+  //             offset: [0, -100]
+  //           });
+  //   const viewport = {
+  //       ...this.state.viewport,
+  //       longitude: lng,
+  //       latitude: lat,
+  //       zoom,
+  //       transitionDuration: 5000,
+  //       transitionInterpolator: new FlyToInterpolator(),
+  //       transitionEasing: d3.easeCubic
+  //   }
+  //   this.setState({viewport});
+  // };
 
   /*
    *  Function call to display restaurant information
@@ -154,7 +177,7 @@ class Map extends Component {
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
         mapStyle={"mapbox://styles/crisner/cjo2rsbau30eo2sns60vykal6" || "mapbox://styles/mapbox/light-v9"}
         {...this.state.viewport}
-        onViewportChange={(viewport) => this.setState({viewport})}>
+        onViewportChange={this._onViewportChange}>
           <div style={{position: 'absolute', right: 0, top: '75px'}}>
             <NavigationControl onViewportChange={(viewport) => this.setState({viewport})} />
           </div>
@@ -167,7 +190,10 @@ class Map extends Component {
                 longitude={Number(coords.longitude)}
                 offsetLeft={-20} offsetTop={-10}>
                   <DroppedPin className={classes.chip} icon={<RestaurantIcon className={classes.icon} />}
-                  onClick={() => {this.props.clickInfo(coords)}} />
+                  onClick={() => {
+                    // this.goToRestaurant(Number(coords.latitude), Number(coords.longitude));
+                    this.props.clickInfo(coords);
+                    }} />
                 </Marker>
               )
             })
