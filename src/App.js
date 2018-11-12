@@ -196,6 +196,17 @@ class App extends Component {
         )
     }
 
+    /*
+     *   Get height for map component
+     */
+    reduceHeight = () => {
+        const totalHeight = window.innerHeight;
+        const navHeight = document.querySelector('header').clientHeight;
+        const footerHeight = document.querySelector('header').clientHeight;
+        const mapHeight = totalHeight - (navHeight + footerHeight);
+        return mapHeight;
+    }
+
     componentDidMount() {
         this.getAllLocations()
         .then(data => {
@@ -242,6 +253,7 @@ class App extends Component {
             updateQuery={this.updateQuery.bind(this)}
             clickInfo={this.updateResInfoClickHandler.bind(this)} />
             <Map
+            height={this.reduceHeight}
             error={this.state.error}
             location={showLocList}
             details={this.state.restaurant_details}

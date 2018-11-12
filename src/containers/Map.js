@@ -142,6 +142,18 @@ class Map extends Component {
       )
     }
 
+  componentDidMount() {
+    const height = this.props.height();
+    this.setState({viewport: {
+      width: window.innerWidth,
+      height: height,
+      latitude: 11.004556,
+      longitude: 76.961632,
+      zoom: 11,
+      maxBounds: bounds
+    }})
+  }
+
   componentWillReceiveProps(nextProps) {
     if(this.props.popupInfo !== nextProps.popupInfo && nextProps.popupInfo !== null) {
       const resId = nextProps.popupInfo.res_id;
