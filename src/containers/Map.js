@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import ReactMapGL, {NavigationControl, Marker, Popup, FlyToInterpolator} from 'react-map-gl';
-import WebMercatorViewport from 'viewport-mercator-project';
-import * as d3 from 'd3-ease';
+import ReactMapGL, {NavigationControl, Marker, Popup} from 'react-map-gl';
 import RestaurantIcon from '@material-ui/icons/Restaurant';
 import ChipPin from '../components/ChipPin';
 import { withStyles } from '@material-ui/core/styles';
@@ -82,27 +80,12 @@ class Map extends Component {
     }
   };
 
+  /*
+   *  Update viewport state on viewport change
+   */
   onViewportChange = viewport => {
     this.setState({viewport});
   };
-
-  // goToRestaurant = (lat, lng) => {
-  //   const {zoom} = new WebMercatorViewport(this.state.viewport)
-  //           .fitBounds(bounds, {
-  //             padding: 20,
-  //             offset: [0, -100]
-  //           });
-  //   const viewport = {
-  //       ...this.state.viewport,
-  //       longitude: lng,
-  //       latitude: lat,
-  //       zoom,
-  //       transitionDuration: 5000,
-  //       transitionInterpolator: new FlyToInterpolator(),
-  //       transitionEasing: d3.easeCubic
-  //   }
-  //   this.setState({viewport});
-  // };
 
   /*
    *  Function call to display restaurant information
@@ -190,10 +173,7 @@ class Map extends Component {
                 longitude={Number(coords.longitude)}
                 offsetLeft={-20} offsetTop={-10}>
                   <DroppedPin className={classes.chip} icon={<RestaurantIcon className={classes.icon} />}
-                  onClick={() => {
-                    // this.goToRestaurant(Number(coords.latitude), Number(coords.longitude));
-                    this.props.clickInfo(coords);
-                    }} />
+                  onClick={() => {this.props.clickInfo(coords)}} />
                 </Marker>
               )
             })
