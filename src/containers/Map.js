@@ -1,9 +1,16 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import ReactMapGL, {NavigationControl, Marker, Popup} from 'react-map-gl';
+import WebMercatorViewport from 'viewport-mercator-project';
 import RestaurantIcon from '@material-ui/icons/Restaurant';
 import ChipPin from '../components/ChipPin';
 import { withStyles } from '@material-ui/core/styles';
+
+// Set bounds to Coimbatore, TN
+const bounds = [
+  [10.907189, 76.864568], // Southwest coordinates
+  [11.114782, 77.074681]  // Northeast coordinates
+];
 
 // Styles for materialui components
 const styles = theme => ({
@@ -68,7 +75,9 @@ class Map extends Component {
       height: window.innerHeight,
       latitude: 11.004556,
       longitude: 76.961632,
-      zoom: 11
+      zoom: 11,
+      maxBounds: bounds
+
     }
   };
 
