@@ -77,7 +77,7 @@ const styles = theme => ({
 
 class NavBar extends Component {
   state = {
-    open: true,
+    open: false,
   };
 
   handleDrawerOpen = () => {
