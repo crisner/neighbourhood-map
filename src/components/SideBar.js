@@ -8,7 +8,7 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 
-const drawerWidth = 260;
+const drawerWidth = 240;
 
 // Apply dark theme
 const theme = createMuiTheme({
@@ -24,6 +24,12 @@ const theme = createMuiTheme({
         padding: 0,
       },
     },
+    MuiList: {
+      padding: {
+        paddingTop: 0,
+        paddingBottom: '28px',
+      }
+    }
   },
 });
 
