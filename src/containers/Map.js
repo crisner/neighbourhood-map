@@ -103,7 +103,7 @@ class Map extends Component {
         location={location}
         displayStarRating={this.props.displayStarRating}
         classes={classes}
-        onClose={this.props.closeOnClick}
+        closeOnClick={this.props.closeOnClick}
          />
     )
   }
