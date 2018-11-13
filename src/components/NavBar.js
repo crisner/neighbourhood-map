@@ -127,7 +127,9 @@ class NavBar extends Component {
             </div>
           </Toolbar>
         </AppBar>
-        <SideBar open={open} // Contains restaurants list
+        <SideBar // Contains restaurants list
+        open={open}
+        toggle={this.handleDrawerOpen.bind(this)}
         location={location}
         clickInfo={this.props.clickInfo} />
       </div>

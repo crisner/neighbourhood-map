@@ -77,7 +77,10 @@ function SideBar(props) {
           </div>
           ) : (location.map(res => ( // response success
             <div key={res.res_id}>
-              <ListItem role="listitem" className={classes.listItem} button onClick={() => props.clickInfo(res)}>
+              <ListItem role="listitem" className={classes.listItem} button onClick={() => {
+                props.clickInfo(res);
+                props.toggle();
+                }}>
                 <ListItemText primary={res.name} />
                 <ListItemText secondary={res.locality} />
               </ListItem>
