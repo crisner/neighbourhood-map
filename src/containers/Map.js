@@ -102,7 +102,6 @@ class Map extends Component {
         user_rating={user_rating}
         location={location}
         displayStarRating={this.props.displayStarRating}
-        classes={classes}
         closeOnClick={this.props.closeOnClick}
          />
     )
