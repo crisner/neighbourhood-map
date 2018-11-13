@@ -17,7 +17,7 @@ function Popup(props) {
       <div tabIndex="0" className={styles.details}>
         {conditionDetails ? <p className={styles.address}>No details found</p> : null}
         {conditionDetails || props.details.thumb === "" ? null : (
-        <img className={styles.img} src={props.details.thumb} alt={props.details.name} width="100px" height="100px" />
+        <img className={styles.img} src={props.details.thumb} alt={props.details.name} />
         )}
         <p className={styles.ratingDetails}>
         <span className={styles.stars}>{conditionDetails ? null : props.displayStarRating(Rating)}</span>

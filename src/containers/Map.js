@@ -92,7 +92,6 @@ class Map extends Component {
   showPopup = () => {
     const {popupInfo, details, reviews} = this.props;
     const {location, user_rating} = this.props.details;
-    const { classes } = this.props;
 
     return popupInfo && (
       <Popup
