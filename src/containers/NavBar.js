@@ -11,6 +11,8 @@ import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 
+window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
+
 // Styles for materialui components
 const styles = theme => ({
   root: {
