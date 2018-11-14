@@ -25,12 +25,13 @@ function Popup(props) {
         <br />
         <span>{conditionDetails || props.user_rating === undefined ? null : (
           props.user_rating.votes === "1" ? ` 1 vote` : ` ${props.user_rating.votes} votes`
-        )}</span></p><br />
-        <p className={styles.address}>{conditionDetails || props.location === undefined ? null : props.location.address}</p>
+        )}</span><br />
+        <span className={styles.address}>{conditionDetails || props.location === undefined ? null : props.location.address}</span></p>
+
         {
           // Display restaurant reviews
         }
-        <div tabIndex="0">
+        {/* <div tabIndex="0">
             <h5 className={styles.subtitle}>Reviews</h5>
             <ul className={styles.list}>
             {conditionReviews || props.reviews.user_reviews === undefined ? (
@@ -41,7 +42,7 @@ function Popup(props) {
               ) : null)
             )}
             </ul>
-        </div>
+        </div> */}
       </div>
     </div>
   )
