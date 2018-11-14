@@ -13,7 +13,6 @@ A react app that displays restaurants in an area.
 |__ src
     |__ components
     |__ containers
-    |__ images
 ```
 
 ## Getting started
