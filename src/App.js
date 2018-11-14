@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import escapeRegExp from 'escape-string-regexp'
 import 'mapbox-gl/dist/mapbox-gl.css';
-import NavBar from './components/NavBar';
+import NavBar from './containers/NavBar';
 import Map from './containers/Map';
 import Footer from './components/Footer';
-import Modal from './containers/Modal';
+import Modal from './components/Modal';
 import StarIcon from '@material-ui/icons/Star';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import StarHalfIcon from '@material-ui/icons/StarHalf';

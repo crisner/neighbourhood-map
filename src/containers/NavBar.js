@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import SideBar from './SideBar';
+import SideBar from '../components/SideBar';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';

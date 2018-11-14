@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import ReactMapGL, {NavigationControl, Marker} from 'react-map-gl';
-import Popup from './Popup';
+import Popup from '../components/Popup';
 import RestaurantIcon from '@material-ui/icons/Restaurant';
 import ChipPin from '../components/ChipPin';
 import { withStyles } from '@material-ui/core/styles';
