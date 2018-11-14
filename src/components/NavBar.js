@@ -87,7 +87,6 @@ class NavBar extends Component {
   };
 
   onChangeHandler = (e) => {
-    // console.log('query entered', e.target.value);
     let query = e.target.value;
     this.props.updateQuery(query);
   }

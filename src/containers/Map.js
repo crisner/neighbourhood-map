@@ -129,7 +129,6 @@ class Map extends Component {
   }
 
   render() {
-    // console.log(this.props);
     const { classes, location } = this.props;
     const DroppedPin = ChipPin('#f7b148');
     const HighlightPin = ChipPin('#f77848');
