@@ -15,7 +15,6 @@ class App extends Component {
     state = {
         location_details: [],
         restaurant_details: [],
-        restaurant_reviews: [],
         popupInfo: null,
         query: '',
         error: false,
@@ -66,27 +65,6 @@ class App extends Component {
     }
 
     /*
-     *   API Call to get restaurant reviews
-     */
-    getReviews = (resId) => {
-        const Url = `https://developers.zomato.com/api/v2.1/reviews?res_id=${resId}`;
-        const headers = new Headers({
-            "Content-Type": "application/json",
-            "user-key": process.env.REACT_APP_ZOMATO_ACCESS_TOKEN
-        });
-        return fetch(Url, {headers}).then(res => {
-                if(!res.ok) {
-                    return Promise.reject({
-                        status: res.status,
-                        statusText: res.statusText
-                    })
-                } else {
-                    return res.json();
-                }
-        });
-    }
-
-    /*
      *   Function to get restaurant data
      *   from the api
      */
@@ -100,16 +78,6 @@ class App extends Component {
             this.setState({restaurant_details: error})
             console.log(error, 'Cannot find restaurant details')
         })
-        this.getReviews(resId)
-        .then(reviews => {
-            console.log(reviews);
-            this.setState({restaurant_reviews: reviews});
-            console.log("2(update):", this.state)
-        })
-        .catch(error => {
-            this.setState({restaurant_reviews: error});
-            console.log(error, this.state, 'Cannot find restaurant reviews')
-        })
     }
 
     /*
@@ -119,14 +87,12 @@ class App extends Component {
         if(this.state.popupInfo === coords) {
             this.setState({
                 popupInfo: null,
-                restaurant_details: [],
-                restaurant_reviews: []
+                restaurant_details: []
             })
         } else {
             this.setState({
                 popupInfo: coords,
-                restaurant_details: [],
-                restaurant_reviews: []
+                restaurant_details: []
             })
         }
     }
@@ -266,7 +232,6 @@ class App extends Component {
             error={this.state.error}
             location={showLocList}
             details={this.state.restaurant_details}
-            reviews={this.state.restaurant_reviews}
             popupInfo={this.state.popupInfo}
             displayStarRating={this.displayStarRating}
             closeOnClick={this.closeOnClick.bind(this)}
