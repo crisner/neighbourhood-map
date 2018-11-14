@@ -156,7 +156,7 @@ class Map extends Component {
                 offsetLeft={-20} offsetTop={-10}>
                   <HighlightPin className={classes.chip} icon={<RestaurantIcon className={classes.icon} />}
                   onClick={() => {
-                    // this.props.marker(null);
+                    this.props.marker(null);
                     this.props.clickInfo(coords)
                     }} />
                 </Marker>
@@ -170,7 +170,7 @@ class Map extends Component {
                 offsetLeft={-20} offsetTop={-10}>
                   <DroppedPin className={classes.chip} icon={<RestaurantIcon className={classes.icon} />}
                   onClick={() => {
-                    // this.props.marker(coords);
+                    this.props.marker(coords);
                     this.props.clickInfo(coords)
                     }} />
                 </Marker>
