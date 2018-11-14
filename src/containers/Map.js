@@ -132,6 +132,7 @@ class Map extends Component {
     // console.log(this.props);
     const { classes, location } = this.props;
     const DroppedPin = ChipPin('#f7b148');
+    const HighlightPin = ChipPin('#f77848');
 
     return (
       <div style={{position: 'absolute', top: `${this.state.top}px`}}>
@@ -146,16 +147,35 @@ class Map extends Component {
           </div>
           { location.hasOwnProperty('status') && location.status !== 200 ? null : (
             location.map(coords => {
-              return (
-                <Marker
+              if (coords === this.props.markerId) {
+                return (
+                  <Marker
+                key={coords.res_id}
+                latitude={Number(coords.latitude)}
+                longitude={Number(coords.longitude)}
+                offsetLeft={-20} offsetTop={-10}>
+                  <HighlightPin className={classes.chip} icon={<RestaurantIcon className={classes.icon} />}
+                  onClick={() => {
+                    // this.props.marker(null);
+                    this.props.clickInfo(coords)
+                    }} />
+                </Marker>
+                )
+              } else {
+                return (
+                  <Marker
                 key={coords.res_id}
                 latitude={Number(coords.latitude)}
                 longitude={Number(coords.longitude)}
                 offsetLeft={-20} offsetTop={-10}>
                   <DroppedPin className={classes.chip} icon={<RestaurantIcon className={classes.icon} />}
-                  onClick={() => {this.props.clickInfo(coords)}} />
+                  onClick={() => {
+                    // this.props.marker(coords);
+                    this.props.clickInfo(coords)
+                    }} />
                 </Marker>
-              )
+                )
+              }
             })
           )}
           {this.showPopup()}

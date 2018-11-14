@@ -79,6 +79,7 @@ function SideBar(props) {
             <div key={res.res_id}>
               <ListItem role="listitem" className={classes.listItem} button onClick={() => {
                 props.clickInfo(res);
+                props.marker(res);
                 props.toggle();
                 }}>
                 <ListItemText primary={res.name} />

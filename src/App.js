@@ -19,7 +19,13 @@ class App extends Component {
         query: '',
         error: false,
         errorText: '',
-        modalOpen: false
+        modalOpen: false,
+        marker: null
+    }
+
+    highlightMarker = (marker) => {
+        this.setState({marker});
+        console.log(marker)
     }
 
     /*
@@ -222,11 +228,14 @@ class App extends Component {
         return (
         <div className="App">
             <NavBar
+            marker={this.highlightMarker.bind(this)}
             location={showLocList}
             query={this.state.query}
             updateQuery={this.updateQuery.bind(this)}
             clickInfo={this.updateResInfoClickHandler.bind(this)} />
             <Map
+            markerId={this.state.marker}
+            marker={this.highlightMarker.bind(this)}
             topPosition={this.setPosition}
             height={this.reduceHeight}
             error={this.state.error}
