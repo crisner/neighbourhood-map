@@ -23,9 +23,11 @@ class App extends Component {
         marker: null
     }
 
+    /*
+     *  Highlight active marker
+     */
     highlightMarker = (marker) => {
         this.setState({marker});
-        console.log(marker)
     }
 
     /*
@@ -75,7 +77,6 @@ class App extends Component {
      *   from the api
      */
     setRestaurantInfo(resId) {
-        console.log("1:", this.state)
         this.getRestaurantDetails(resId)
         .then(details => {
             this.setState({restaurant_details: details})
@@ -201,7 +202,6 @@ class App extends Component {
                     }
                 })
             }))
-            console.log(data);
         })
         .catch(error => {
             this.handleOpen();
